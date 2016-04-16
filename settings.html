@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>BNB Settings</title>
+
+    <link href="http://dashboard.blastdev.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://dashboard.blastdev.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="http://dashboard.blastdev.com/css/dashboard.css" rel="stylesheet">
+    <link href="http://mjolnic.com/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+	<link id="favicon" rel="shortcut icon" href="http://dashboard.blastdev.com/favicon-96x96.png" sizes="16x16 32x32 48x48" type="image/png">
+
+
+    <script src="http://dashboard.blastdev.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="http://dashboard.blastdev.com/socket.io-1.4.5.js"></script>
+    <script src="http://dashboard.blastdev.com/js/jquery-1.12.2.min.js"></script>
+    <script src="http://dashboard.blastdev.com/js/react.min.js"></script>
+    <script src="http://dashboard.blastdev.com/js/react-dom.js"></script>
+    <script src="http://dashboard.blastdev.com/js/react-jsonschema-form.js"></script>
+    <script src="http://dashboard.blastdev.com/js/bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/device_bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/user_bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/role_bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/state_bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/audit_bnb.js"></script>
+    <script src="http://dashboard.blastdev.com/js/js.cookie.js"></script>
+    <script src="http://dashboard.blastdev.com/dist/js/bootstrap.min.js"></script>
+    <script src="http://dashboard.blastdev.com/assets/js/vendor/holder.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="http://mjolnic.com/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+</head>
+
+<body>
+<script>
+    var backend = true;
+</script>
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" align="center">
+                <img class="img-circle" id="img_logo" src="http://dashboard.blastdev.com/assets/img/netrom_logo.png"/>
+            </div>
+            <div id="div-forms">
+                <div id="login-form">
+                    <div class="modal-body">
+                        <div id="div-login-msg">
+                            <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-login-msg">Login with the NetRom AD credentials</span>
+                        </div>
+                        <input id="login_username" class="form-control" type="text" placeholder="Username" required>
+                        <input id="login_password" class="form-control" type="password" placeholder="Password" required>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="login()">Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="login_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Welcome to BNB Dashboard</h4>
+            </div>
+            <div class="modal-body" id="welcome_body">
+                <h4 id="login_text"></h4>
+            </div>
+            <div class="modal-footer" style="text-align:center">
+                <button type="button" id="ready_button" class="btn btn-default" style="display:none" data-dismiss="modal">Ready!</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="about-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">About</h4>
+            </div>
+            <div class="modal-body">
+                <h4>The Team</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="settings_content" style="display:none">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img style="float:left;margin-right:20px" src="http://dashboard.blastdev.com/assets/img/button.png" height="50px;"/>
+                <a class="navbar-brand" href="#">Big NetRom Button</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" id="menu">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="/index.html">Dashboard <span class="sr-only">(current)</span></a></li>
+                    <li class="active">
+						<a href="/settings.html">Settings</a>
+						<ul class="collapse in submenubnb">
+							<li onclick="$('.section').hide();showDeviceList()"><img src="/assets/img/icons/ipod.png"/>Devices</li>
+							<li onclick="$('.section').hide();showUserList()"><img src="/assets/img/icons/user-male.png"/>Users</li>
+							<li onclick="$('.section').hide();showAuditList()"><img src="/assets/img/icons/documents.png"/>Audit</li>
+							<li onclick="$('.section').hide();showStateList()"><img src="/assets/img/icons/list.png"/>States</li>
+							<li onclick="$('.section').hide();showRoleList()"><img src="/assets/img/icons/lock.png"/>Roles</li>
+							<li onclick="$('.section').hide();generateStats()"><img src="/assets/img/icons/stats.png"/>Statistics</li>
+							<li onclick="$('.section').hide();$('#about-modal').modal()"><img src="/assets/img/icons/information.png"/>About BNB</li>
+						</ul>
+					</li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">Settings</h1>
+                <table class="settings" border="1">
+                    <tr>
+                        <td rowspan="2" colspan="3" align="left">
+                            <h3 style="color:#8DA13A;text-align:center;font-weight:bold">Welcome to BNB Panel</h3>
+                            <p style="color:#8DA13A;text-align:center">You can configure everything you need from this
+                                panel</p>
+                            <img src="/assets/img/icons/home.png" height="90px;"/>
+
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="showDeviceList()" title="Devices"
+                               data-toggle="popover" data-placement="left"
+                               data-content="In this section you can manage devices, enable/disable them, etc.">
+                                <p><img src="/assets/img/icons/ipod.png"/></p>
+                                <p>Manage Devices</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="showUserList()" title="Users" data-toggle="popover"
+                               data-placement="right" data-content="Manage AD users, add/edit details, assign roles">
+                                <p><img src="/assets/img/icons/users.png"/></p>
+                                <p>Manage users</p>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0)" onclick="showAuditList()" title="Audit" data-toggle="popover"
+                               data-placement="left" data-content="See all recent events recorded by all devices">
+                                <p><img src="/assets/img/icons/documents.png"/></p>
+                                <p>Event log</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="showRoleList()" title="Roles/Permissions"
+                               data-toggle="popover" data-placement="right"
+                               data-content="Manage existing roles and permissions to determine which users are allowed to perform certain actions and control who can do/see what">
+                                <p><img src="/assets/img/icons/lock.png"/></p>
+                                <p>Roles/Permissions</p>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr rowspan="2">
+                        <td>
+                            <a href="javascript:void(0)" onclick="showStateList()" title="Devices statuses"
+                               data-toggle="popover" data-placement="bottom"
+                               data-content="Manage device statuses, define possible colors for the button on each state, specify which states are requests, etc.">
+                                <p><img src="/assets/img/icons/list.png"/></p>
+                                <p>Device statuses</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="showConfig()" title="Configuration"
+                               data-toggle="popover" data-placement="bottom"
+                               data-content="Application configurations like pagination items, wireless settings, dashboard result list display settings, etc">
+                                <p><img src="/assets/img/icons/settings.png"/></p>
+                                <p>Configuration</p>
+                            </a>
+                        </td>
+                        <td>
+							<a href="javascript:void(0)" onclick="generateStats()" title="Statistics"
+                               data-toggle="popover" data-placement="bottom"
+                               data-content="Show number of actions per device, per user, time usage, etc">
+                                <p><img src="/assets/img/icons/stats.png"/></p>
+                                <p>Statistics</p>
+                            </a>
+                        </td>
+                        <td colspan="2">
+                            <a href="javascript:void(0)" onclick="jQuery('#about-modal').modal()" title="About"
+                               data-toggle="popover" data-placement="bottom" data-content="What does this app do?">
+                                <p><img src="/assets/img/icons/information.png"/></p>
+                                <p>About BNB App</p>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <div id="device_settings" style="display:none" class="section">
+                    <div id="device_section"></div>
+                    <div class="table-responsive device_list" id="device_list">
+                        <div id="device_list_content"></div>
+                    </div>
+                </div>
+                <div id="user_settings" class="section" style="display:none">
+                    <div id="user_section"></div>
+                    <div class="table-responsive users_list" id="user_list">
+                        <div id="user_list_content"></div>
+                    </div>
+                </div>
+                <div id="role_settings" class="section" style="display:none">
+                    <div id="role_section"></div>
+                    <div class="table-responsive role_list" id="role_list">
+                        <div id="role_list_content"></div>
+                    </div>
+                </div>
+                <div id="state_settings" class="section" style="display:none">
+                    <div id="state_section"></div>
+                    <div class="table-responsive state_list" id="state_list">
+                        <div id="state_list_content"></div>
+                    </div>
+                </div>
+                <div id="audit_settings" class="section" style="display:none">
+                    <div id="audit_section"></div>
+                    <div class="table-responsive audit_list" id="audit_list">
+                        <div id="audit_list_content"></div>
+                    </div>
+                </div>
+                <div id="config_settings" class="section" style="display:none">
+                    <div id="config_section"></div>
+                    <div class="table-responsive config_list" id="config_list">
+                    </div>
+                </div>
+                <div id="messages" style="display:none"></div>
+                <div id="statistics" style="display:none">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Device requests (All time)</div>
+                        <div class="panel-body">
+                            <div id="canvas-holder1">
+                                <canvas id="chart-area1" width="300" height="300"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">User requests (All time)</div>
+                        <div class="panel-body">
+                            <div id="canvas-holder2">
+                                <canvas id="chart-area2" width="300" height="300"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Usage (requests) per month</div>
+                        <div class="panel-body">
+                            <div id="canvas-holder3">
+                                <canvas id="chart-area3" width="550" height="300"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">New users registered (last month)</div>
+                        <div class="panel-body">
+                            <div id="canvas-holder4">
+                                <canvas id="chart-area4" width="550" height="300"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
